@@ -23,7 +23,6 @@ class Item:
       
     def roll(self):
         roll_val = (random.randrange(self.lb, 1001)/100)
-        print(roll_val)
         if roll_val <= 5:
             result = random.choices(self.commons, weights=(40, 25, 20, 10, 5), k=1)[0]
             name = result[0]
@@ -40,10 +39,10 @@ class Item:
         elif roll_val > 8 and roll_val <= 8.5:
             print("You recieved a hypothetical epic!")
             result = None
-        elif roll_val > 8.5 and roll_val <= 8.8:
+        elif roll_val > 8.5 and roll_val <= 8.6:
             print("You recieved a hypothetical legendary!")
             result = None
-        elif roll_val > 8.8 and roll_val <= 9:
+        elif roll_val > 8.6 and roll_val <= 8.65:
             print("You recieved a hypothetical mythic!")
             result = None
         else:
@@ -58,7 +57,7 @@ uncommons = [["Computer Mouse", 6], ["Keyboard", 8], ["Monitor", 10], ["Laptop",
 rares = []
 Wand = Item(commons, uncommons, rares, "Placeholder", 0)
 while True:
-    choice = str(input("What to do?"))
+    choice = str(input("What to do?\n"))
     if choice == "roll":
         result = Wand.roll()
         if result:
