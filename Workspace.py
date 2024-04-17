@@ -34,16 +34,16 @@ class Item:
             lb = result[1]
             print(f'You recieved {name} and it has a luck boost of {lb}!\n')
         elif roll_val > 7 and roll_val <= 8:
-            print("You recieved a hypothetical rare!")
+            print("You recieved a hypothetical rare!\n")
             result = None
         elif roll_val > 8 and roll_val <= 8.5:
-            print("You recieved a hypothetical epic!")
+            print("You recieved a hypothetical epic!\n")
             result = None
         elif roll_val > 8.5 and roll_val <= 8.6:
-            print("You recieved a hypothetical legendary!")
+            print("You recieved a hypothetical legendary!\n")
             result = None
         elif roll_val > 8.6 and roll_val <= 8.65:
-            print("You recieved a hypothetical mythic!")
+            print("You recieved a hypothetical mythic!\n")
             result = None
         else:
             print("You did not recieve anything! (If you see this message, this program must be in testing!)\n")
