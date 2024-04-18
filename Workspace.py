@@ -18,7 +18,16 @@ import random
 
 class Item:
     def __init__(
-        self, commons, uncommons, rares, epics, legendaries, mythics, name, lb
+        self,
+        commons,
+        uncommons,
+        rares,
+        epics,
+        legendaries,
+        mythics,
+        crate_odds,
+        name,
+        lb,
     ):
         self.commons = commons
         self.uncommons = uncommons
@@ -26,44 +35,45 @@ class Item:
         self.epics = epics
         self.legendaries = legendaries
         self.mythics = mythics
+        self.crate_odds = crate_odds
         self.name = name
         self.lb = lb
 
     def roll(self):
         roll_val = random.randrange(self.lb, 1001) / 100
-        if roll_val <= 5:
+        if roll_val > crate_odds[0][0] and roll_val <= crate_odds[0][1]:
             result = random.choices(self.commons, weights=(40, 25, 20, 10, 5), k=1)[0]
             name = result[0]
             lb = result[1]
             print(f"You recieved {name} and it has a luck boost of {lb}!\n")
-        elif roll_val > 5 and roll_val <= 7:
+        elif roll_val > crate_odds[1][0] and roll_val <= crate_odds[1][1]:
             result = random.choices(self.uncommons, weights=(60, 20, 10, 6, 4), k=1)[0]
             name = result[0]
             lb = result[1]
             print(f"You recieved {name} and it has a luck boost of {lb}!\n")
-        elif roll_val > 7 and roll_val <= 8:
+        elif roll_val > crate_odds[2][0] and roll_val <= crate_odds[2][1]:
             result = random.choices(self.rares, weights=(70, 20, 6, 3, 1), k=1)[0]
             name = result[0]
             lb = result[1]
             print(f"You recieved {name} and it has a luck boost of {lb}!\n")
-        elif roll_val > 8 and roll_val <= 8.5:
+        elif roll_val > crate_odds[3][0] and roll_val <= crate_odds[3][1]:
             result = random.choices(self.epics, weights=(75, 15, 5, 4.5, 0.5), k=1)[0]
             name = result[0]
             lb = result[1]
             print(f"You recieved {name} and it has a luck boost of {lb}!\n")
-        elif roll_val > 8.5 and roll_val <= 8.6:
+        elif roll_val > crate_odds[4][0] and roll_val <= crate_odds[4][1]:
             result = random.choices(self.legendaries, weights=(85, 14.7, 0.3), k=1)[0]
             name = result[0]
             lb = result[1]
             print(f"You recieved {name} and it has a luck boost of {lb}!\n")
-        elif roll_val > 8.6 and roll_val <= 8.65:
+        elif roll_val > crate_odds[5][0] and roll_val <= crate_odds[5][1]:
             result = random.choices(self.mythics, weights=(95, 4.99, 0.01), k=1)[0]
             name = result[0]
             lb = result[1]
             print(f"You recieved {name} and it has a luck boost of {lb}!\n")
         else:
             print(
-                "You did not recieve anything! (If you see this message, this program must be in testing!)\n"
+                "You did not receive anything! (If you see this message, this program must be in testing!)\n"
             )
             result = None
         return result
@@ -72,7 +82,26 @@ class Item:
         self.name = name
         self.lb = lb
 
+    def return_odds(self):
+        common_odds = crate_odds[0][1] - crate_odds[0][0]
+        uncommon_odds = crate_odds[1][1] - crate_odds[1][0]
+        rare_odds = crate_odds[2][1] - crate_odds[2][0]
+        epic_odds = crate_odds[3][1] - crate_odds[3][0]
+        legendary_odds = crate_odds[4][1] - crate_odds[4][0]
+        mythic_odds = crate_odds[5][1] - crate_odds[5][0]
+        print(f"Item Equipped: {self.name}\nLuck Boost: {self.lb}")
+        if self.lb >= (crate_odds[0][1] * 100):
+            common_odds = 0
+        else:
+            common_odds = ((crate_odds[0][1] * 100) - self.lb) / (1000 - self.lb)
+        if self.lb >= (crate_odds[1][1] * 100):
+            uncommon_odds = 0
+        else:
+            pass
+        print(common_odds)
 
+
+crate_odds = [[0, 5], [5, 7], [7, 8], [8, 8.5], [8.5, 8.6], [8.6, 8.65]]
 commons = [
     ["Pencil", 1],
     ["Eraser", 2],
@@ -97,10 +126,20 @@ epics = [
 ]
 legendaries = [["Mouse", 300], ["Bird", 400], ["Worm", 500]]
 mythics = [["Charred", 550], ["Drowned", 650], ["Befallen", 800]]
-Wand = Item(commons, uncommons, rares, epics, legendaries, mythics, "Placeholder", 0)
+Wand = Item(
+    commons,
+    uncommons,
+    rares,
+    epics,
+    legendaries,
+    mythics,
+    crate_odds,
+    "Placeholder",
+    200,
+)
 while True:
-    choice = str(input("What to do?\n"))
-    if choice == "roll":
+    choice = str(input("What do you want to do?\nType /help for a list of actions.\n"))
+    if choice == "/roll":
         result = Wand.roll()
         if result:
             name, lb = result
@@ -108,5 +147,9 @@ while True:
             if equip_bool.upper() or equip_bool.lower() == "Y":
                 Wand.equip(name, lb)
         print(
-            f"Current Equipped Item: {Wand.name} | Luck Boost (Roll + Luck Boost Value): {Wand.lb}"
+            f"Current Equipped Item: {Wand.name} | Luck Boost ({Wand.lb}, 1000): {Wand.lb}"
         )
+    elif choice == "/help":
+        pass
+    elif choice == "/odds":
+        Wand.return_odds()
