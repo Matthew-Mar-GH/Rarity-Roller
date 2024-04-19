@@ -1,6 +1,6 @@
 # Rarity Roller/Loot Roller
 ### A project by Matthew Mar
-Rarity Roller is a console-based Python application that rewards an item based on a random probability. Various commands 
+Rarity Roller is a console-based Python application that rewards an item based on a random probability. Various commands are availible to visualize probabilities.
 ## Download Instructions
 N/A - This is a WIP Project
 ## FAQs
