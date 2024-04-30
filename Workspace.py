@@ -1,10 +1,6 @@
 # With assistance from:
 # https://chat.openai.com/
-# w3schools.com
-# Stack Overflow
-# geeksforgeeks.org
 # Title ASCII Art - https://www.patorjk.com/software/taag/#p=display&f=Graffiti&t=Type%20Something%20
-# docs.python.org
 # Treasure Chest ASCII Art - https://ascii.co.uk/art/treasure
 import random
 import time
