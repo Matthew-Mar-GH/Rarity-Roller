@@ -6,6 +6,24 @@ import random
 import time
 
 
+def reaction(lb):
+    if lb < 100:
+        choice = random.randint(0, len(Wand.minor_reaction))
+        for item in Wand.minor_reaction:
+            if item == Wand.minor_reaction[choice - 1]:
+                return item
+    elif lb >= 100 and lb < 500:
+        choice = random.randint(0, len(Wand.major_reaction))
+        for item in Wand.major_reaction:
+            if item == Wand.major_reaction[choice - 1]:
+                return item
+    elif lb >= 500:
+        choice = random.randint(0, len(Wand.extreme_reaction))
+        for item in Wand.extreme_reaction:
+            if item == Wand.extreme_reaction[choice - 1]:
+                return item
+
+
 class Item:
     def __init__(
         self,
@@ -21,13 +39,10 @@ class Item:
         epic_lc_weights,
         legendary_lc_weights,
         mythic_lc_weights,
-        common_odds,
-        uncommon_odds,
-        rare_odds,
-        epic_odds,
-        legendary_odds,
-        mythic_odds,
         crate_odds,
+        minor_reaction,
+        major_reaction,
+        extreme_reaction,
         name,
         lb,
         roll_counter,
@@ -44,13 +59,10 @@ class Item:
         self.epic_lc_weights = epic_lc_weights
         self.legendary_lc_weights = legendary_lc_weights
         self.mythic_lc_weights = mythic_lc_weights
-        self.common_odds = common_odds
-        self.uncommon_odds = uncommon_odds
-        self.rare_odds = rare_odds
-        self.epic_odds = epic_odds
-        self.legendary_odds = legendary_odds
-        self.mythic_odds = mythic_odds
         self.crate_odds = crate_odds
+        self.minor_reaction = minor_reaction
+        self.major_reaction = major_reaction
+        self.extreme_reaction = extreme_reaction
         self.name = name
         self.lb = lb
         self.roll_counter = roll_counter
@@ -65,38 +77,50 @@ class Item:
             ]
             name = result[0]
             lb = result[1]
-            print(f"You received {name} and it has a luck boost of {lb}!\n")
+            print(
+                f"{reaction(lb)} You received {name} and it has a luck boost of {lb}!\n"
+            )
         elif roll_val > self.crate_odds[1][0] and roll_val <= self.crate_odds[1][1]:
             result = random.choices(
                 self.uncommons, weights=self.uncommon_lc_weights, k=1
             )[0]
             name = result[0]
             lb = result[1]
-            print(f"You received {name} and it has a luck boost of {lb}!\n")
+            print(
+                f"{reaction(lb)} You received {name} and it has a luck boost of {lb}!\n"
+            )
         elif roll_val > self.crate_odds[2][0] and roll_val <= self.crate_odds[2][1]:
             result = random.choices(self.rares, weights=self.rare_lc_weights, k=1)[0]
             name = result[0]
             lb = result[1]
-            print(f"You received {name} and it has a luck boost of {lb}!\n")
+            print(
+                f"{reaction(lb)} You received {name} and it has a luck boost of {lb}!\n"
+            )
         elif roll_val > self.crate_odds[3][0] and roll_val <= self.crate_odds[3][1]:
             result = random.choices(self.epics, weights=self.epic_lc_weights, k=1)[0]
             name = result[0]
             lb = result[1]
-            print(f"You received {name} and it has a luck boost of {lb}!\n")
+            print(
+                f"{reaction(lb)} You received {name} and it has a luck boost of {lb}!\n"
+            )
         elif roll_val > self.crate_odds[4][0] and roll_val <= self.crate_odds[4][1]:
             result = random.choices(
                 self.legendaries, weights=self.legendary_lc_weights, k=1
             )[0]
             name = result[0]
             lb = result[1]
-            print(f"You received {name} and it has a luck boost of {lb}!\n")
+            print(
+                f"{reaction(lb)} You received {name} and it has a luck boost of {lb}!\n"
+            )
         elif roll_val > self.crate_odds[5][0] and roll_val <= self.crate_odds[5][1]:
             result = random.choices(self.mythics, weights=self.mythic_lc_weights, k=1)[
                 0
             ]
             name = result[0]
             lb = result[1]
-            print(f"You received {name} and it has a luck boost of {lb}!\n")
+            print(
+                f"{reaction(lb)} You received {name} and it has a luck boost of {lb}!\n"
+            )
         print(f"You have rolled {self.roll_counter} time(s)!\n{line_divider}")
         return result
 
@@ -205,12 +229,9 @@ legendaries = [["Mouse", 300], ["Bird", 400], ["Worm", 500]]
 legendary_lc_weights = [85, 14.7, 0.3]
 mythics = [["Charred", 550], ["Drowned", 650], ["Befallen", 800]]
 mythic_lc_weights = [95, 4.99, 0.01]
-common_odds = 0.6
-uncommon_odds = 0.25
-rare_odds = 0.1
-epic_odds = 0.03
-legendary_odds = 0.018
-mythic_odds = 0.002
+minor_reaction = ["Wow!", "Nice!", "Great!", "Cool!"]
+major_reaction = ["Spectacular!", "Goodness!", "Mind-blowing!", "Amazing!", "Fabulous!"]
+extreme_reaction = ["OMG!", "Indescribable!", "My Oh My!"]
 Wand = Item(
     commons,
     uncommons,
@@ -224,41 +245,14 @@ Wand = Item(
     epic_lc_weights,
     legendary_lc_weights,
     mythic_lc_weights,
-    common_odds,
-    uncommon_odds,
-    rare_odds,
-    epic_odds,
-    legendary_odds,
-    mythic_odds,
     crate_odds,
+    minor_reaction,
+    major_reaction,
+    extreme_reaction,
     "Pencil",
     0,
     0,
 )
-all_items_lb = [
-    [Wand.commons],
-    [Wand.uncommons],
-    [Wand.rares],
-    [Wand.epics],
-    [Wand.legendaries],
-    [Wand.mythics],
-]
-all_weights = [
-    [Wand.common_lc_weights],
-    [Wand.uncommon_lc_weights],
-    [Wand.rare_lc_weights],
-    [Wand.epic_lc_weights],
-    [Wand.legendary_lc_weights],
-    [Wand.mythic_lc_weights],
-]
-rarity_types = [
-    Wand.common_odds,
-    Wand.uncommon_odds,
-    Wand.rare_odds,
-    Wand.epic_odds,
-    Wand.legendary_odds,
-    Wand.mythic_odds,
-]
 
 ASCII_art_treasure = r"""
                             _.--.
@@ -299,7 +293,6 @@ ASCII_art_question_mark = r"""
              q###r
               """
 line_divider = ">----------------------------------------<"
-debugmode = False
 print(f"{line_divider}\nHello! Welcome to Rarity Roller v1.0.0!\n")
 time.sleep(1)
 print("In this game, the goal is to get the item of the highest rarity!\n")
@@ -307,10 +300,10 @@ time.sleep(1)
 print("To roll for an item, type /roll when prompted on an action!\n")
 time.sleep(1)
 print(
-    "Rolls are determined based on four factors:\n- The number randomly generated (0 to 10)\n- The crate received (each crate has a range of numbers within 0 to 10 that rewards it)\n- The Weights of each item in each crate\n- Your equipped item's luck boost (affects total range of numbers that can be generated)"
+    "Rolls are determined based on four factors:\n- The number randomly generated (0 to 10)\n- The crate received (each crate has a range of numbers within 0 to 10 that rewards it)\n- The Weights of each item in each crate\n- Your equipped item's luck boost (affects total range of numbers that can be generated)\n"
 )
 time.sleep(1)
-print("You can also view your odds of each type of crate by entering in /odds\n")
+print("You can also view your odds of each type of crate by entering in /odds.\n")
 time.sleep(1)
 print(f"Good luck!\n{line_divider}")
 
@@ -321,8 +314,6 @@ while True:
     if choice == "/roll":
         result = Wand.roll()
         if result != "":
-            old_name = Wand.name
-            old_lb = Wand.lb
             name, lb = result
             equip_bool = str(input("Equip Item? (Input Y for yes and N for no)\n"))
             if equip_bool == "Y" or equip_bool == "y":
