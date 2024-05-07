@@ -307,52 +307,58 @@ time.sleep(1)
 print("You can also view your odds of each type of crate by entering in /odds.\n")
 time.sleep(1)
 print(f"Good luck!\n{line_divider}")
-
 while autoroll == False:
-    choice = str(
-        input("What do you want to do?\n\nType /help for a list of actions.\n")
-    )
-    if choice == "/roll":
-        result = Wand.roll()
-        if result != "":
-            name, lb = result
-            equip_bool = str(input("Equip Item? (Input Y for yes and N for no)\n"))
-            if equip_bool == "Y" or equip_bool == "y":
-                Wand.equip(name, lb)
-        print(
-            f"\nCurrent Equipped Item: {Wand.name} | Luck Boost ({Wand.lb}, 1000): {Wand.lb}\n{line_divider}"
+    try:
+        choice = str(
+            input("What do you want to do?\n\nType /help for a list of actions.\n")
         )
-    elif choice == "/help":
-        print(
-            f"{line_divider}\nAvailable Commands:\n/roll - rolls for a random item\n/odds - calculate odds of getting a each item rarity tier based on equipped item's current luck boost\n{line_divider}"
-        )
-    elif choice == "/odds":
-        Wand.return_odds()
-    elif choice == "/autoroll":
-        autoroll = True
-        print("autoroll activated! Have fun!")
-        break
-while autoroll == True:
-    choice = str(
-        input("What do you want to do?\n\nType /help for a list of actions.\n")
-    )
-    if choice == "/roll":
-        iter = int(input("How many times?"))
-        for i in range(0, iter):
+        if choice == "/roll":
             result = Wand.roll()
             if result != "":
                 name, lb = result
-                if lb > Wand.lb:
+                equip_bool = str(input("Equip Item? (Input Y for yes and N for no)\n"))
+                if equip_bool == "Y" or equip_bool == "y":
                     Wand.equip(name, lb)
             print(
-                f"Current Equipped Item: {Wand.name} | Luck Boost ({Wand.lb}, 1000): {Wand.lb}"
+                f"\nCurrent Equipped Item: {Wand.name} | Luck Boost ({Wand.lb}, 1000): {Wand.lb}\n{line_divider}"
             )
-    elif choice == "/help":
-        print(
-            f"{line_divider}\nAvailable Commands:\n/roll - rolls for a random item\n/odds - calculate odds of getting a each item rarity tier based on equipped item's current luck boost\n{line_divider}"
+        elif choice == "/help":
+            print(
+                f"{line_divider}\nAvailable Commands:\n/roll - rolls for a random item\n/odds - calculate odds of getting a each item rarity tier based on equipped item's current luck boost\n{line_divider}"
+            )
+        elif choice == "/odds":
+            Wand.return_odds()
+        elif choice == "/autoroll":
+            autoroll = True
+            print("autoroll activated! Have fun!")
+            break
+    except KeyboardInterrupt:
+        pass
+
+while autoroll == True:
+    try:
+        choice = str(
+            input("What do you want to do?\n\nType /help for a list of actions.\n")
         )
-    elif choice == "/odds":
-        Wand.return_odds()
-    elif choice == "/autoroll":
-        autoroll = True
-        break
+        if choice == "/roll":
+            iter = int(input("How many times?"))
+            for i in range(0, iter):
+                result = Wand.roll()
+                if result != "":
+                    name, lb = result
+                    if lb > Wand.lb:
+                        Wand.equip(name, lb)
+                print(
+                    f"Current Equipped Item: {Wand.name} | Luck Boost ({Wand.lb}, 1000): {Wand.lb}"
+                )
+        elif choice == "/help":
+            print(
+                f"{line_divider}\nAvailable Commands:\n/roll - rolls for a random item\n/odds - calculate odds of getting a each item rarity tier based on equipped item's current luck boost\n{line_divider}"
+            )
+        elif choice == "/odds":
+            Wand.return_odds()
+        elif choice == "/autoroll":
+            autoroll = True
+            break
+    except KeyboardInterrupt:
+        pass
