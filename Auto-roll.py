@@ -340,7 +340,7 @@ while autoroll == True:
         choice = str(
             input("What do you want to do?\n\nType /help for a list of actions.\n")
         )
-        if choice == "/roll":
+        if choice == "/roll" or choice == "r":
             iter = int(input("How many times?"))
             for i in range(0, iter):
                 result = Wand.roll()
